@@ -1,5 +1,6 @@
 .env
 .env.local
+*:Zone.Identifier
 
 __pycache__/
 *.py[cod]
