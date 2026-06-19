@@ -30,6 +30,30 @@ src/
   generate.py
 ```
 
+## Local Setup
+
+Use Python 3.11 or newer.
+
+Create and activate a virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Check that PyTorch is installed:
+
+```bash
+python -c "import torch; print(torch.__version__)"
+```
+
 ## Dataset
 
 The first dataset should be a plain text file at:
@@ -39,6 +63,26 @@ data/input.txt
 ```
 
 That file is ignored by Git so local datasets do not get committed.
+
+For example, after downloading or creating a small text dataset, save it as:
+
+```txt
+data/input.txt
+```
+
+## Running The Project
+
+The main scripts exist now, but their implementations are still placeholders.
+They will become useful in later steps.
+
+Current entry points:
+
+```bash
+python -m src.train
+python -m src.generate
+```
+
+At this stage, these commands intentionally raise `NotImplementedError`.
 
 ## Roadmap
 
