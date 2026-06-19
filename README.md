@@ -26,6 +26,7 @@ requirements.txt
 data/
 src/
   data.py
+  tokenizer.py
   model.py
   train.py
   generate.py
@@ -86,8 +87,16 @@ You can also provide a custom dataset path:
 python -m src.train --data-path path/to/input.txt
 ```
 
-The script prints the number of training and validation characters. The actual
-training loop will be added in a later step.
+The script prints the number of training and validation characters, builds a
+character vocabulary, and checks that encoding/decoding works.
+
+To inspect the raw split text and tokenizer vocabulary:
+
+```bash
+python -m src.train --show-splits --show-vocab
+```
+
+The actual training loop will be added in a later step.
 
 ## Roadmap
 
