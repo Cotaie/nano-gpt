@@ -25,6 +25,7 @@ README.md
 requirements.txt
 data/
 src/
+  data.py
   model.py
   train.py
   generate.py
@@ -70,19 +71,23 @@ For example, after downloading or creating a small text dataset, save it as:
 data/input.txt
 ```
 
-## Running The Project
+## Checking The Dataset
 
-The main scripts exist now, but their implementations are still placeholders.
-They will become useful in later steps.
-
-Current entry points:
+After creating `data/input.txt`, check that the project can load and split the
+dataset:
 
 ```bash
 python -m src.train
-python -m src.generate
 ```
 
-At this stage, these commands intentionally raise `NotImplementedError`.
+You can also provide a custom dataset path:
+
+```bash
+python -m src.train --data-path path/to/input.txt
+```
+
+The script prints the number of training and validation characters. The actual
+training loop will be added in a later step.
 
 ## Roadmap
 
