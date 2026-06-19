@@ -88,7 +88,8 @@ python -m src.train --data-path path/to/input.txt
 ```
 
 The script prints the number of training and validation characters, builds a
-character vocabulary, and checks that encoding/decoding works.
+character vocabulary, checks that encoding/decoding works, and runs one Bigram
+model forward pass.
 
 To inspect the raw split text and tokenizer vocabulary:
 

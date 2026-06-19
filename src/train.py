@@ -3,7 +3,10 @@
 import argparse
 from pathlib import Path
 
+import torch
+
 from src.data import DEFAULT_DATA_PATH, DEFAULT_TRAIN_RATIO, load_dataset
+from src.model import BigramLanguageModel
 from src.tokenizer import CharacterTokenizer
 
 
@@ -37,6 +40,11 @@ def main() -> None:
         action="store_true",
         help="Print tokenizer mappings and encoded train/validation token IDs.",
     )
+    parser.add_argument(
+        "--show-bigram-matrix",
+        action="store_true",
+        help="Print the randomly initialized Bigram score matrix.",
+    )
     args = parser.parse_args()
 
     try:
@@ -60,6 +68,26 @@ def main() -> None:
         raise SystemExit("error: train text failed tokenizer round trip")
     if tokenizer.decode(val_tokens) != dataset.val_text:
         raise SystemExit("error: validation text failed tokenizer round trip")
+
+    if len(train_tokens) < 2:
+        raise SystemExit("error: training split must contain at least two tokens")
+
+    inputs = torch.tensor(train_tokens[:-1], dtype=torch.long).unsqueeze(0)
+    targets = torch.tensor(train_tokens[1:], dtype=torch.long).unsqueeze(0)
+    model = BigramLanguageModel(tokenizer.vocab_size)
+    logits, loss = model(inputs, targets)
+
+    if loss is None:
+        raise SystemExit("error: model did not return a loss")
+
+    print(f"bigram input shape: {tuple(inputs.shape)}")
+    print(f"bigram logits shape: {tuple(logits.shape)}")
+    print(f"initial bigram loss: {loss.item():.4f}")
+
+    if args.show_bigram_matrix:
+        print()
+        print("bigram score matrix:")
+        print(model.token_embedding_table.weight.detach())
 
     if args.show_splits:
         print()
